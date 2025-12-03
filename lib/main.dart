@@ -49,19 +49,53 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            const MyText(),
+            MyCounterText(counter: _counter),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: MyFloatingActionButton(onPressed: (){
+        _incrementCounter();
+      },),
     );
   }
 }
+
+class MyText extends StatelessWidget {
+  const MyText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('You have pushed the button this many times:');
+  }
+}
+
+
+class MyCounterText extends StatelessWidget {
+  final int counter;
+  const MyCounterText({super.key, required this.counter});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '$counter',
+      style: Theme.of(context).textTheme.headlineMedium,
+    );
+  }
+}
+
+class MyFloatingActionButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  const MyFloatingActionButton({super.key, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: onPressed,
+      tooltip: 'Increment',
+      child: const Icon(Icons.add),
+    );
+  }
+}
+
+
