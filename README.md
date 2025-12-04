@@ -1,16 +1,47 @@
 # flutter_riverpod_dersi
 
-A new Flutter project.
+A new Flutter project that applies state management using riverpod.
 
-## Getting Started
+## Riverpod
 
-This project is a starting point for a Flutter application.
+A Reactive Caching and Data-binding Framework.Declare shared state from anywhere
+No need to jump between your main.dart and your UI files anymore.
+Place the code of your shared state where it belongs, be it in a separate package or right next to the Widget that needs it, without losing testability.
+A state management library. You can declare your variables once and use them anywhere in your app using providers.
 
-A few resources to get you started if this is your first Flutter project:
+main.dart
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    void main() {
+        runApp(
+        ProviderScope(child: const RiverpodBasics())
+        );
+    }
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+riverpod_basics.dart
+
+    final titleProvider = Provider<String>((ref) => 'Riverpod Basics');
+    final textProvider = Provider<String>((ref) {
+        return 'You have pushed the button this many times:';
+    });
+    
+    final sayacStateProvider = StateProvider<int>((ref){
+        return 0;
+    });
+
+    title: Consumer(
+        builder: (context, ref, child) {
+        var title = ref.watch(titleProvider);
+        return Text(title);
+        },
+    ),
+    
+    var text = ref.watch(textProvider);
+    return Text(text);
+    
+    var sayac = ref.watch(sayacStateProvider);
+    return Text('$sayac', style: Theme.of(context).textTheme.headlineMedium);
+    
+    return FloatingActionButton(
+        onPressed: (){
+        ref.read(sayacStateProvider.notifier).state++;
+    },
