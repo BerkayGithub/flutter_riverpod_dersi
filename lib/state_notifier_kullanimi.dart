@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'all_providers.dart';
 
-class RiverpodBasics extends StatelessWidget {
-  const RiverpodBasics({super.key});
+class StateNotifierKullanimi extends StatelessWidget {
+  const StateNotifierKullanimi({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Consumer(
           builder: (context, ref, child) {
-            var title = ref.watch(titleProvider);
+            var title = ref.watch(titleProvider2);
             return Text(title);
           },
         ),
@@ -40,6 +40,7 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             const MyText(),
             MyCounterText(),
+            CiftMiWidget()
           ],
         ),
       ),
@@ -63,7 +64,7 @@ class MyCounterText extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var sayac = ref.watch(sayacStateProvider);
+    var sayac = ref.watch(sayacNotifierProvider).sayac;
     return Text('$sayac', style: Theme.of(context).textTheme.headlineMedium);
   }
 }
@@ -76,10 +77,23 @@ class MyFloatingActionButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return FloatingActionButton(
       onPressed: (){
-        ref.read(sayacStateProvider.notifier).state++;
+        //ref.read(sayacNotifierProvider) bize SayacModel sınıfını verir.
+        //arttirma ve azaltma metodları StateManager sınıfı içinde olduğundan
+        //bu sınıfı açmak için .notifier metodunu çalıştırmak gerek
+        ref.read(sayacNotifierProvider.notifier).arttir();
       },
       tooltip: 'Increment',
       child: const Icon(Icons.add),
     );
   }
+}
+
+class CiftMiWidget extends ConsumerWidget{
+  const CiftMiWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Text(ref.watch(ciftMiProvider) ? "ÇİFT" : "TEK");
+  }
+
 }
