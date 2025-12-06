@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod_dersi/state_notifier_kullanimi.dart';
+import 'package:flutter_riverpod_dersi/konu_anlatimi/state_notifier_kullanimi.dart';
 
 void main() {
   runApp(

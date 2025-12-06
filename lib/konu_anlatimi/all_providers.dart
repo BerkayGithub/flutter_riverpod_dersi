@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:flutter_riverpod_dersi/sayac_manager.dart';
+import 'package:flutter_riverpod_dersi/konu_anlatimi/sayac_manager.dart';
 
 import 'model/sayac_model.dart';
 
