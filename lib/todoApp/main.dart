@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_dersi/todoApp/future_provider.dart';
 import 'package:flutter_riverpod_dersi/todoApp/todo_app.dart';
 
 void main(){
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TodoApp(),
+      home: FutureProviderExample(),
     );
   }
 }
