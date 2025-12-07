@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod_dersi/todoApp/models/todo.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_dersi/todoApp/providers/all_providers.dart';
 import 'package:flutter_riverpod_dersi/todoApp/widgets/title_widget.dart';
 import 'package:flutter_riverpod_dersi/todoApp/widgets/todo_list_item_widget.dart';
 import 'package:flutter_riverpod_dersi/todoApp/widgets/toolbar_widget.dart';
-import 'package:uuid/uuid.dart';
 
-class TodoApp extends StatelessWidget {
+class TodoApp extends ConsumerWidget {
   TodoApp({super.key});
   final newTodoController = TextEditingController();
-  final List<Todo> todoList = [
-    Todo(id : Uuid().v4(), description: "Spora git"),
-    Todo(id : Uuid().v4(), description: "Alışveriş yap"),
-    Todo(id : Uuid().v4(), description: "Ders çalış")
-  ];
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var todoList = ref.watch(todoListProvider);
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
@@ -23,7 +20,7 @@ class TodoApp extends StatelessWidget {
           TextField(
             decoration: InputDecoration(labelText: "Bugün ne yapacaksın?"),
             onSubmitted: (newTodo){
-              debugPrint("$newTodo eklendi");
+              ref.read(todoListProvider.notifier).addTodo(newTodo);
             },
           ),
           const SizedBox(height: 20),
@@ -32,7 +29,7 @@ class TodoApp extends StatelessWidget {
             Dismissible(
                 key: ValueKey(todoList[i].id),
                 onDismissed: (_){
-
+                  ref.read(todoListProvider.notifier).delete(todoList[i]);
                 },
                 child: TodoListItemWidget(todoItem:todoList[i])),
         ],

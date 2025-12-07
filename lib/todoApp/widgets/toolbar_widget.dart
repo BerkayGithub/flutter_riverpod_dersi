@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_dersi/todoApp/providers/all_providers.dart';
 
-class ToolbarWidget extends StatelessWidget {
+class ToolbarWidget extends ConsumerWidget {
   const ToolbarWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var todoList = ref.watch(todoListProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: const Text("4 görev var")),
+        Expanded(child: Text("${todoList.length} görev var")),
         Tooltip(
           message: "All todos",
-          child: TextButton(onPressed: (){},child: const Text("All")),
+          child: TextButton(onPressed: (){
+
+          },child: const Text("All")),
         ),
         Tooltip(
           message: "Only uncompleted todos",

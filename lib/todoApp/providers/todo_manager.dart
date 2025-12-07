@@ -15,9 +15,9 @@ class TodoManager extends StateNotifier<List<Todo>> {
     state = [
       for (var todoItem in state)
         if (todoItem.id == todo.id)
-          Todo(id: todo.id, description: todo.description, isDone: !todo.isDone)
+          Todo(id: todoItem.id, description: todoItem.description, isDone: !todoItem.isDone)
         else
-          todo,
+          todoItem,
     ];
   }
 
@@ -34,5 +34,9 @@ class TodoManager extends StateNotifier<List<Todo>> {
   void delete(Todo todo){
     state = state.where((element) => element.id != todo.id).toList();
     //By making a new state with a list of todos that is not equal to the to be deleted todo's id, it is like we delete it
+  }
+
+  int uncompletedTodoCount(){
+    return state.where((element) => !element.isDone).length;
   }
 }
