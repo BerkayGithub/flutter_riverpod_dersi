@@ -11,7 +11,7 @@ class TodoApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var todoList = ref.watch(todoListProvider);
+    var todoList = ref.watch(filteredTodoList);
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
@@ -25,6 +25,8 @@ class TodoApp extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
           ToolbarWidget(),
+          todoList.isEmpty ? Center(child: Text("Burada hiç görev yok"),) :
+          SizedBox(),
           for(var i = 0; i < todoList.length; i++)
             Dismissible(
                 key: ValueKey(todoList[i].id),

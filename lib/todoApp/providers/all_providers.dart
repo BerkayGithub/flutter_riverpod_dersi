@@ -23,3 +23,21 @@ final uncompletedTodoCount = Provider<int>((ref){
 final currentTodo = Provider<Todo>((ref){
   throw UnimplementedError();
 });
+
+enum TodoListFilter {all, completed, uncompleted}
+
+final filterProvider = StateProvider<TodoListFilter>((ref) => TodoListFilter.all);
+
+final filteredTodoList = Provider<List<Todo>>((ref){
+  final allTodos = ref.watch(todoListProvider);
+  final listFilter = ref.watch(filterProvider);
+
+  switch(listFilter){
+    case TodoListFilter.all:
+      return allTodos;
+    case TodoListFilter.completed:
+      return allTodos.where((element) => element.isDone).toList();
+    case TodoListFilter.uncompleted:
+      return allTodos.where((element) => !element.isDone).toList();
+  }
+});
