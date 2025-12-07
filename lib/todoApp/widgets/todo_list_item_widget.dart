@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_dersi/todoApp/providers/all_providers.dart';
 
-import '../models/todo.dart';
-
 class TodoListItemWidget extends ConsumerStatefulWidget {
-  final Todo todoItem;
-  const TodoListItemWidget({super.key, required this.todoItem});
+  const TodoListItemWidget({super.key});
 
   @override
   ConsumerState<TodoListItemWidget> createState() => _TodoListItemWidgetState();
@@ -33,15 +30,16 @@ class _TodoListItemWidgetState extends ConsumerState<TodoListItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTodoItem = ref.read(currentTodo);
     return Focus(
       onFocusChange: (isFocused){
         if(!isFocused){
           setState(() {
             hasFocus = false;
           });
-          ref.read(todoListProvider.notifier).edit(widget.todoItem.id, textEditingController.text);
+          ref.read(todoListProvider.notifier).edit(currentTodoItem.id, textEditingController.text);
         }else{
-          textEditingController.text = widget.todoItem.description;
+          textEditingController.text = currentTodoItem.description;
         }
       },
       child: ListTile(
@@ -52,15 +50,15 @@ class _TodoListItemWidgetState extends ConsumerState<TodoListItemWidget> {
           focusNode.requestFocus();
         },
         leading: Checkbox(
-          value: widget.todoItem.isDone,
+          value: currentTodoItem.isDone,
           onChanged: (newValue) {
-            ref.read(todoListProvider.notifier).toggle(widget.todoItem);
+            ref.read(todoListProvider.notifier).toggle(currentTodoItem);
           },
         ),
         title: hasFocus ? TextField(
           controller: textEditingController,
           focusNode: focusNode,
-        ) : Text(widget.todoItem.description),
+        ) : Text(currentTodoItem.description),
       ),
     );
   }

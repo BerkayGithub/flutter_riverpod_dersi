@@ -31,7 +31,13 @@ class TodoApp extends ConsumerWidget {
                 onDismissed: (_){
                   ref.read(todoListProvider.notifier).delete(todoList[i]);
                 },
-                child: TodoListItemWidget(todoItem:todoList[i])),
+                child: ProviderScope(
+                    overrides: [
+                      currentTodo.overrideWithValue(todoList[i])
+                    ],
+                    child: TodoListItemWidget()
+                )
+            ),
         ],
       ),
     );

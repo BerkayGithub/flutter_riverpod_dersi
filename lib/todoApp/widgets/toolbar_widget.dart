@@ -7,24 +7,26 @@ class ToolbarWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var todoList = ref.watch(todoListProvider);
+    final unConmpletedCount = ref.watch(uncompletedTodoCount);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: Text("${todoList.length} görev var")),
+        Expanded(
+          child: unConmpletedCount == 0
+              ? Text("Tüm görevler tamamlandı")
+              : Text("$unConmpletedCount görev var"),
+        ),
         Tooltip(
           message: "All todos",
-          child: TextButton(onPressed: (){
-
-          },child: const Text("All")),
+          child: TextButton(onPressed: () {}, child: const Text("All")),
         ),
         Tooltip(
           message: "Only uncompleted todos",
-          child: TextButton(onPressed: (){},child: const Text("Active")),
+          child: TextButton(onPressed: () {}, child: const Text("Active")),
         ),
         Tooltip(
           message: "Only completed todos",
-          child: TextButton(onPressed: (){},child: const Text("Completed")),
+          child: TextButton(onPressed: () {}, child: const Text("Completed")),
         ),
       ],
     );
